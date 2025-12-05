@@ -17,11 +17,13 @@ let project = Project(
         .target(
             name: "Counter",
             destinations: .iOS,
-            product: .app,
+            product: .framework,
             bundleId: "com.raehoon.TCALab.Counter",
             deploymentTargets: .iOS("17.0"),
             sources: ["Sources/**"],
-            dependencies: []
+            dependencies: [
+                .external(name: "ComposableArchitecture", condition: .none)
+            ]
         ),
         .target(
             name: "CounterTests",

@@ -19,6 +19,7 @@ let project = Project(
             destinations: .iOS,
             product: .app,
             bundleId: "com.raehoon.TCALab",
+            deploymentTargets: .iOS("17.0"),
             infoPlist: .extendingDefault(
                 with: [
                     "CFBundleDisplayName": "TCALab",
@@ -30,7 +31,9 @@ let project = Project(
             ),
             sources: ["Sources/**"],
             resources: ["Resources/**"],
-            dependencies: []
+            dependencies: [
+                .project(target: "Counter", path: "../Features/Counter")
+            ]
         ),
         .target(
             name: "TCALabTests",
