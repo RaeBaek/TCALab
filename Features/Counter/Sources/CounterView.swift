@@ -9,6 +9,7 @@ import ComposableArchitecture
 import SwiftUI
 
 public struct CounterView: View {
+
     let store: StoreOf<CounterFeature>
 
     public init(store: StoreOf<CounterFeature>) {
@@ -20,6 +21,16 @@ public struct CounterView: View {
             VStack(spacing: 20) {
                 Text("Count: \(viewStore.count)")
                     .font(.largeTitle)
+
+                Stepper(
+                    "Step: \(viewStore.stepValue)",
+                    value: viewStore.binding(
+                        get: \.stepValue,
+                        send: { .stepChanged($0) }
+                    ),
+                    in: 1...10
+                )
+                .padding(.horizontal, 30)
 
                 HStack(spacing: 20) {
                     Button("-") {
@@ -39,7 +50,7 @@ public struct CounterView: View {
                     if viewStore.isLoading {
                         ProgressView()
                     } else {
-                        Text("Async +1 (after 1s)")
+                        Text("Async +\(viewStore.stepValue) (after 1s)")
                     }
                 }
                 .padding()

@@ -14,10 +14,16 @@ public struct CounterFeature {
     public struct State: Equatable {
         var count: Int
         var isLoading: Bool
+        var stepValue: Int
 
-        public init(count: Int = 0, isLoading: Bool = false) {
+        public init(
+            count: Int = 0,
+            isLoading: Bool = false,
+            stepValue: Int = 1
+        ) {
             self.count = count
             self.isLoading = isLoading
+            self.stepValue = stepValue
         }
     }
 
@@ -26,6 +32,7 @@ public struct CounterFeature {
         case decrement
         case asyncIncrement
         case asyncIncrementResponse
+        case stepChanged(Int)
     }
 
     public init() { }
@@ -34,20 +41,27 @@ public struct CounterFeature {
         Reduce { state, action in
             switch action {
             case .increment:
-                state.count += 1
+                state.count += state.stepValue
                 return .none
+
             case .decrement:
-                state.count -= 1
+                state.count -= state.stepValue
                 return .none
+
             case .asyncIncrement:
                 state.isLoading = true
                 return .run { send in
                     try await Task.sleep(for: .seconds(1))
                     await send(.asyncIncrementResponse)
                 }
+                
             case .asyncIncrementResponse:
                 state.isLoading = false
-                state.count += 1
+                state.count += state.stepValue
+                return .none
+
+            case .stepChanged(let newValue):
+                state.stepValue = newValue
                 return .none
             }
         }
