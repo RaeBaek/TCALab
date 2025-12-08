@@ -53,8 +53,10 @@ public struct CounterView: View {
                         Text("Async +\(viewStore.stepValue) (after 1s)")
                     }
                 }
+                .disabled(viewStore.isLoading)
                 .padding()
-                .background(.blue)
+                .opacity(viewStore.isLoading ? 0.3 : 1)
+                .background(viewStore.isLoading ? .gray : .blue)
                 .foregroundStyle(.white)
                 .clipShape(RoundedRectangle(cornerRadius: 8))
             }
