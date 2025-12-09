@@ -32,7 +32,8 @@ let project = Project(
             sources: ["Sources/**"],
             resources: ["Resources/**"],
             dependencies: [
-                .project(target: "Counter", path: "../Features/Counter")
+                .project(target: "Counter", path: "../Features/Counter"),
+                .project(target: "TwoCounters", path: "../Features/TwoCounters")
             ]
         ),
         .target(

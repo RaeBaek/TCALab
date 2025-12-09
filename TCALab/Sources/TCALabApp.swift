@@ -7,17 +7,15 @@
 
 import ComposableArchitecture
 import SwiftUI
-import Counter
+import TwoCounters
 
 @main
 struct TCALabApp: App {
     var body: some Scene {
         WindowGroup {
-            CounterView(
-                store: Store(
-                    initialState: CounterFeature.State(),
-                    reducer: { CounterFeature() }
-                )
+            TwoCountersView(store: Store(
+                initialState: TwoCountersFeature.State(),
+                reducer: { TwoCountersFeature() })
             )
         }
     }

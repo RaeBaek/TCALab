@@ -1,7 +1,7 @@
 import ProjectDescription
 
 let project = Project(
-    name: "Counter",
+    name: "TwoCounters",
     settings: .settings(
         base: [
             "SWIFT_VERSION": "5.10",
@@ -15,24 +15,25 @@ let project = Project(
     ),
     targets: [
         .target(
-            name: "Counter",
+            name: "TwoCounters",
             destinations: .iOS,
             product: .framework,
-            bundleId: "com.raehoon.TCALab.Counter",
+            bundleId: "com.raehoon.TCALab.TwoCounters",
             deploymentTargets: .iOS("17.0"),
             sources: ["Sources/**"],
             dependencies: [
+                .project(target: "Counter", path: "../Counter"),
                 .external(name: "ComposableArchitecture", condition: .none)
             ]
         ),
         .target(
-            name: "CounterTests",
+            name: "TwoCountersTests",
             destinations: .iOS,
             product: .unitTests,
-            bundleId: "com.raehoon.TCALab.CounterTests",
+            bundleId: "com.raehoon.TCALab.TwoCountersTests",
             infoPlist: .default,
             sources: ["Tests/**"],
-            dependencies: [.target(name: "Counter")]
+            dependencies: [.target(name: "TwoCounters")]
         )
     ]
 )
