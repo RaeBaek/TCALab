@@ -11,7 +11,6 @@ import SwiftUI
 
 @Reducer
 public struct CounterFeature {
-
     public struct State: Equatable {
         var count: Int
         var isLoading: Bool
@@ -28,7 +27,7 @@ public struct CounterFeature {
         }
     }
 
-    public enum Action {
+    public enum Action: Equatable {
         case increment
         case incrementDebounced
         case decrement
@@ -38,6 +37,8 @@ public struct CounterFeature {
         case stepChanged(Int)
     }
 
+    @Dependency(\.continuousClock) var clock
+
     public init() { }
 
     public var body: some ReducerOf<Self> {
@@ -46,24 +47,22 @@ public struct CounterFeature {
             action in
             switch action {
             case .increment:
-                return .send(.incrementDebounced)
-                    .debounce(
-                        id: DebounceKind.increment,
-                        for: .milliseconds(200),
-                        scheduler: DispatchQueue.main
-                    )
+                return .run { send in
+                    try await clock.sleep(for: .milliseconds(200))
+                    await send(.incrementDebounced)
+                }
+                .cancellable(id: DebounceKind.increment, cancelInFlight: true)
 
             case .incrementDebounced:
                 state.count += state.stepValue
                 return .none
 
             case .decrement:
-                return .send(.decrementDebounced)
-                    .debounce(
-                        id: DebounceKind.decrement,
-                        for: .milliseconds(200),
-                        scheduler: DispatchQueue.main
-                    )
+                return .run { send in
+                    try await clock.sleep(for: .milliseconds(200))
+                    await send(.decrementDebounced)
+                }
+                .cancellable(id: DebounceKind.decrement, cancelInFlight: true)
 
             case .decrementDebounced:
                 state.count -= state.stepValue

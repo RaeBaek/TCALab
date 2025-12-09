@@ -8,7 +8,7 @@
 import ProjectDescription
 
 let workspace = Workspace(
-    name: "Showcase",
+    name: "TCALab",
     projects: [
         "TCALab/**",
         "Features/**"
