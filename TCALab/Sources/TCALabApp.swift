@@ -8,15 +8,22 @@
 import ComposableArchitecture
 import SwiftUI
 import TwoCounters
+import Todos
 
 @main
 struct TCALabApp: App {
     var body: some Scene {
         WindowGroup {
-            TwoCountersView(store: Store(
-                initialState: TwoCountersFeature.State(),
-                reducer: { TwoCountersFeature() })
+            TodosView(
+                store: Store(
+                    initialState: TodosFeature.State(),
+                    reducer: { TodosFeature() }
+                )
             )
+//            TwoCountersView(store: Store(
+//                initialState: TwoCountersFeature.State(),
+//                reducer: { TwoCountersFeature() })
+//            )
         }
     }
 }
