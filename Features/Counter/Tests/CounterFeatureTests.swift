@@ -1,5 +1,5 @@
 //
-//  CounterFeature.swift
+//  CounterFeatureTests.swift
 //  Counter
 //
 //  Created by 백래훈 on 12/5/25.

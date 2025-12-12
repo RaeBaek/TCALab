@@ -34,7 +34,8 @@ let project = Project(
             dependencies: [
                 .project(target: "Counter", path: "../Features/Counter"),
                 .project(target: "TwoCounters", path: "../Features/TwoCounters"),
-                .project(target: "Todos", path: "../Features/Todos")
+                .project(target: "Todos", path: "../Features/Todos"),
+                .project(target: "Animation", path: "../Features/Animation")
             ]
         ),
         .target(
